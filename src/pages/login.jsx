@@ -1,8 +1,21 @@
 import React from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Col } from "react-bootstrap";
 import "../assets/styles/login.scss";
+import { signIn } from "../utils/firebase/firebaseAuth";
+import { FaArrowRotateRight } from "react-icons/fa6";
+import * as Yup from "yup";
+import { Formik } from "formik";
+
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Required"),
+  password: Yup.string().required("Required"),
+});
 
 const login = () => {
+  const submit = async ({ email, password }) => {
+    await signIn(email, password);
+  };
+
   return (
     <section id="login-page">
       <article className="image-container ">
@@ -11,37 +24,63 @@ const login = () => {
       <article className="form-login  ">
         <div className="container-form h-100 mx-auto p-3 p-md-5">
           <h1 className="mb-5 fw-bold">Login</h1>
-          <form>
-            <Form.Label size="lg" htmlfor="email">
-              Email
-            </Form.Label>
-            <Form.Control
-              size="lg"
-              className="mb-4"
-              id="email"
-              placeholder="Email"
-              aria-label="Email"
-              type="email"
-            />
-            <Form.Label size="lg" htmlFor="inputPassword5">
-              Password
-            </Form.Label>
-            <Form.Control
-              className="mb-2"
-              size="lg"
-              type="password"
-              id="inputPassword5"
-              aria-describedby="passwordHelpBlock"
-            />
-            <Form.Text size="lg" className="mb-4" id="passwordHelpBlock" muted>
-              Your password must be 8-20 characters long, contain letters and
-              numbers, and must not contain spaces, special characters, or
-              emoji.
-            </Form.Text>
-            <Button className="w-100 mt-5 fw-semibold" size="lg">
-              Login
-            </Button>
-          </form>
+          <Formik
+            initialValues={{
+              email: "",
+              password: "",
+            }}
+            validationSchema={LoginSchema}
+            onSubmit={submit}
+          >
+            {({ errors, values, handleChange, handleSubmit, isSubmitting }) => (
+              <Form noValidate onSubmit={handleSubmit}>
+                <Form.Group
+                  as={Col}
+                  controlId="validationEmail"
+                  className="mb-3"
+                >
+                  <Form.Label size="lg">Email</Form.Label>
+                  <Form.Control
+                    size="lg"
+                    name="email"
+                    value={values.email}
+                    onChange={handleChange}
+                    isInvalid={!!errors.email}
+                    placeholder="Email"
+                    aria-label="Email"
+                    type="email"
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.email}
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group as={Col} controlId="validationPassword">
+                  <Form.Label size="lg">Password</Form.Label>
+                  <Form.Control
+                    size="lg"
+                    name="password"
+                    value={values.password}
+                    onChange={handleChange}
+                    isInvalid={!!errors.password}
+                    type="password"
+                    aria-describedby="passwordHelpBlock"
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.password}
+                  </Form.Control.Feedback>
+                </Form.Group>
+
+                <Button
+                  type="submit"
+                  className="w-100 mt-5 fw-semibold"
+                  size="lg"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? <FaArrowRotateRight /> : "Login"}
+                </Button>
+              </Form>
+            )}
+          </Formik>
         </div>
       </article>
     </section>

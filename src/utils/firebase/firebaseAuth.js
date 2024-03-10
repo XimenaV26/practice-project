@@ -33,7 +33,7 @@ export const signIn = async (email, password) => {
   }
 };
 
-export const signOut = async () => {
+export const logoutFirebase = async () => {
   await auth.signOut();
 };
 
@@ -43,10 +43,10 @@ export const userInfo = () => {
   const { displayName, email, phoneNumber, photoURL, uid } = auth.currentUser;
 
   return {
-    displayName,
-    email,
-    phoneNumber,
-    photoURL,
-    uid,
+    displayName: displayName,
+    email: email,
+    phoneNumber: phoneNumber,
+    photoURL: photoURL,
+    uid: uid,
   };
 };

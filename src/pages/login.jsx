@@ -1,19 +1,23 @@
 import React from "react";
 import { Form, Button, Col } from "react-bootstrap";
 import "../assets/styles/login.scss";
-import { signIn } from "../utils/firebase/firebaseAuth";
 import { FaArrowRotateRight } from "react-icons/fa6";
 import * as Yup from "yup";
 import { Formik } from "formik";
+import { startLogin } from "../store/slices/auth";
+import { useDispatch, useSelector } from "react-redux";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
   password: Yup.string().required("Required"),
 });
 
-const login = () => {
+const Login = () => {
+  const dispatch = useDispatch();
+  const { status } = useSelector((state) => state.auth);
+
   const submit = async ({ email, password }) => {
-    await signIn(email, password);
+    dispatch(startLogin({ email, password }));
   };
 
   return (
@@ -24,6 +28,7 @@ const login = () => {
       <article className="form-login  ">
         <div className="container-form h-100 mx-auto p-3 p-md-5">
           <h1 className="mb-5 fw-bold">Login</h1>
+          {status}
           <Formik
             initialValues={{
               email: "",
@@ -87,4 +92,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, Form } from "react-bootstrap";
 import { FaUserGroup, FaLocationDot, FaSistrix } from "react-icons/fa6";
-import "../assets/styles/profile.scss";
+import "../../assets/styles/profile.scss";
 
 const profile = () => {
   const userData = {

@@ -1,18 +1,25 @@
+import "../../assets/styles/login.scss";
 import React from "react";
+
+// Estilos
 import { Form, Button, Col } from "react-bootstrap";
-import "../assets/styles/login.scss";
 import { FaArrowRotateRight } from "react-icons/fa6";
-import * as Yup from "yup";
-import { Formik } from "formik";
-import { startLogin } from "../store/slices/auth";
+import { AuthLayout } from "../layout/AuthLayout";
+
+// Redux
 import { useDispatch, useSelector } from "react-redux";
+import { startLogin } from "../../store/slices/auth";
+
+// Validacion de formularios
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
   password: Yup.string().required("Required"),
 });
 
-const Login = () => {
+const LoginPage = () => {
   const dispatch = useDispatch();
   const { status } = useSelector((state) => state.auth);
 
@@ -21,10 +28,7 @@ const Login = () => {
   };
 
   return (
-    <section id="login-page">
-      <article className="image-container ">
-        <h2 className="m-auto fw-bold text-white">Welcome</h2>
-      </article>
+    <AuthLayout>
       <article className="form-login  ">
         <div className="container-form h-100 mx-auto p-3 p-md-5">
           <h1 className="mb-5 fw-bold">Login</h1>
@@ -88,8 +92,8 @@ const Login = () => {
           </Formik>
         </div>
       </article>
-    </section>
+    </AuthLayout>
   );
 };
 
-export default Login;
+export default LoginPage;

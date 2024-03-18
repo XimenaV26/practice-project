@@ -29,7 +29,7 @@ const LoginPage = () => {
 
   return (
     <AuthLayout>
-      <article className="form-login  ">
+      <article className="form-login w-100">
         <div className="container-form h-100 mx-auto p-3 p-md-5">
           <h1 className="mb-5 fw-bold">Login</h1>
           {status}

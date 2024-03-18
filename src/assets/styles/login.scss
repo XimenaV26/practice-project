@@ -9,7 +9,7 @@
     background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnnu6obVk9X7KpF7ddIVK0Xukk7GK5uWC1GA&s);
     height: 100vh;
   }
-  .form-login {
+  .form-auth {
     display: flex;
     width: 100%;
     height: 100vh;
@@ -28,7 +28,7 @@
       display: flex;
       width: 60%;
     }
-    .form-login {
+    .form-auth {
       width: 40%;
     }
   }

@@ -22,14 +22,11 @@ export const signUp = async (email, password) => {
 
 export const signIn = async (email, password) => {
   try {
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    return userCredential;
+    await signInWithEmailAndPassword(auth, email, password);
+
+    return { ok: true };
   } catch (error) {
-    console.log(error);
+    return { errorMsg: error.message, ok: false };
   }
 };
 
